@@ -1,0 +1,27 @@
+.carousel-img {
+  width: 40vw;
+
+  object-fit: contain;
+  margin: auto;
+  display: block;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.flex {
+  display: flex;
+}
+.btn-space {
+  margin: 5px;
+}
+.space {
+  margin-bottom: 30px !important;
+}
+@media (min-width: 1000px) {
+  .carousel-img {
+    height: 600px;
+  }
+}
