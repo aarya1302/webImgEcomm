@@ -1,5 +1,12 @@
-import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
 import Home from "../screens/Home";
 import Product from "../screens/Product";
 
@@ -11,8 +18,9 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Route path="/" component={Home} exact />
-
-          <Route path="/product" component={Product} />
+          <Switch>
+            <Route path="/product/:id" component={Product} />
+          </Switch>
         </Layout>
       </BrowserRouter>
     </div>

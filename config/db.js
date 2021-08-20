@@ -5,7 +5,7 @@ require("dotenv").config({ path: ".env" });
 let uri = process.env.MONGO_URI;
 
 let dbname = "ecomm_db";
-
+console.log(uri);
 var state = {
   db: null,
 };
