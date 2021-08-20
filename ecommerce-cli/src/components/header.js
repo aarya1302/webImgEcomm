@@ -39,7 +39,9 @@ var Header = () => {
           />
           <Button variant="outline-success">Search</Button>
         </Form>
-        <Nav.Link>Sign In</Nav.Link>
+        <Nav.Link>
+          <Link to="/signin">Sign In</Link>
+        </Nav.Link>
       </Navbar.Collapse>
     </Navbar>
   );

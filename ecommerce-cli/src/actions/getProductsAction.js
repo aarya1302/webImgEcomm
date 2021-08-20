@@ -4,6 +4,7 @@ import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
 } from "../constants/getProductsConstants";
+import { server_address } from "../globalVariables";
 
 export const getProductsAction = async (dispatch) => {
   dispatch({
@@ -11,7 +12,7 @@ export const getProductsAction = async (dispatch) => {
     payload: { loading: true },
   });
   try {
-    var res = await axios.get(`http://localhost:5000/homeProducts/`);
+    var res = await axios.get(`${server_address}/homeProducts/`);
     var data = res.data;
 
     dispatch({

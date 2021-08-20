@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import Home from "../screens/Home";
 import Product from "../screens/Product";
+import SignIn from "../screens/SignIn";
+import SignUp from "../screens/SignUp";
 
 const { default: Layout } = require("./layout");
 
@@ -21,6 +23,8 @@ function App() {
           <Switch>
             <Route path="/product/:id" component={Product} />
           </Switch>
+          <Route path="/signin" component={SignIn} />
+          <Route path="/signup" component={SignUp} />
         </Layout>
       </BrowserRouter>
     </div>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { server_address } from "../globalVariables";
 import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
@@ -8,7 +9,7 @@ import {
 export const getProductScreenAction = (product_id) => async (dispatch) => {
   dispatch({ type: PRODUCT_REQUEST, payload: { loading: true } });
   try {
-    var res = await axios.get(`http://localhost:5000/product/${product_id}`);
+    var res = await axios.get(`${server_address}/product/${product_id}`);
     var data = res.data;
     dispatch({
       type: PRODUCT_SUCCESS,
