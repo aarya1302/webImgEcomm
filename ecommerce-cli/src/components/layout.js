@@ -1,12 +1,24 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Header from "./header.js";
 
 function Layout(props) {
+  const [userInfo, setUser] = useState();
+  var getUser = useSelector((store) => store.user);
+
+  var { user, loading, error } = getUser;
+  useEffect(
+    function onUpdate() {
+      setUser(user);
+    },
+    [getUser]
+  );
   return (
     <>
       <head>
         <title>WebImg</title>
       </head>
-      <Header></Header>
+      <Header user={user}></Header>
 
       <main className="container-fluid">
         <div>{props.children}</div>

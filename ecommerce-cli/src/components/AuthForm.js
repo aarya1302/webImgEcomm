@@ -1,9 +1,20 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/button";
-import "../authForm.css";
+import "../style/authForm.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const AuthForm = ({ isLogin, handleSubmit, err }) => {
+  const [error, setErr] = useState();
+  useEffect(
+    function onUpdate() {
+      if (err === "Request failed with status code 400") {
+        setErr("Invalid Email or Password");
+        return;
+      }
+      setErr(err);
+    },
+    [err]
+  );
   return (
     <div className="container-fluid center  contain">
       <div className="container contain-login ">
@@ -60,7 +71,8 @@ const AuthForm = ({ isLogin, handleSubmit, err }) => {
             </div>
           )}
         </Form>
-        {err}
+        <br></br>
+        <h6 className="text-center text-danger"> {error}</h6>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
 import { useState, useEffect } from "react";
-import "../product.css";
+import "../style/product.css";
 import { fetchProduct } from "../lib/crud_functions";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductScreenAction } from "../actions/getProductScreenAction";
@@ -110,7 +110,6 @@ export default function Product({ match }) {
 
   return (
     <>
-      <h1>Product</h1>
       <div className="row container-fluid">
         <div className="row w-100">
           <div className="col">{imageContainer}</div>

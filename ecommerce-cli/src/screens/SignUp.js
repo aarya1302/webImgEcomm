@@ -3,19 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { signUpAction } from "../actions/authenticationActions";
 import AuthForm from "../components/AuthForm";
-const SignUp = () => {
+const SignUp = ({ user }) => {
   const [err, setErr] = useState();
   const [message, setMessage] = useState("");
   var dispatch = useDispatch();
-  var getUser = useSelector((state) => state.signUp);
-  var { loading, error, response } = getUser;
+  var getSignUp = useSelector((state) => state.signUp);
+  var { loading, error, response } = getSignUp;
   useEffect(
     function onUpdate() {
+      if (user) {
+        window.location.replace("/");
+        return;
+      }
       if (error === "Request failed with status code 409") {
         setErr("Email already exists in database");
+        return;
       } else {
         setErr("");
       }
+
       if (response) {
         if (response.status === 201) {
           setMessage("Account succesfully created! Redirecting to Login Page");
@@ -25,7 +31,7 @@ const SignUp = () => {
         }
       }
     },
-    [error, response]
+    [error, response, getSignUp]
   );
   var handleSignUp = (e) => {
     e.preventDefault();

@@ -1,12 +1,19 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import { signInAction } from "./actions/authenticationActions";
-import { login, signUp } from "./reducers/authenticationReducers";
 
 import getProductScreenReducer from "./reducers/getProductScreenReducer";
 import getProductsReducer from "./reducers/getProductsReducer";
+import { login } from "./reducers/loginReducer";
+import { signUp } from "./reducers/signUpReducer";
 
-var initialState = {};
+var initialState = {
+  user: {
+    loading: false,
+    user: localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
+      : null,
+  },
+};
 var reducer = combineReducers({
   getProducts: getProductsReducer,
   getProductScreen: getProductScreenReducer,

@@ -19,7 +19,8 @@ export const signInAction = (email, password) => async (dispatch) => {
     );
 
     var user = res.data;
-    dispatch({ type: SIGNUP_REQUEST, payload: user });
+    dispatch({ type: LOGIN_SUCCESS, payload: user });
+    localStorage.setItem("user", JSON.stringify(user));
   } catch (err) {
     dispatch({ type: LOGIN_FAIL, payload: err.message });
   }
