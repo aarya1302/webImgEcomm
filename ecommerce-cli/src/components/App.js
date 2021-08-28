@@ -8,6 +8,7 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
+import Cart from "../screens/Cart";
 import Home from "../screens/Home";
 import Product from "../screens/Product";
 import Profile from "../screens/Profile";
@@ -55,6 +56,10 @@ function App() {
           <Route
             path="/profile"
             component={() => <Profile user={userInfo}></Profile>}
+          />
+          <Route
+            path="/shoppingCart"
+            component={() => <Cart user={userInfo}></Cart>}
           />
         </Layout>
       </BrowserRouter>

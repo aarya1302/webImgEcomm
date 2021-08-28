@@ -1,0 +1,42 @@
+.rounded {
+  border-radius: 1rem;
+}
+
+.nav-pills .nav-link {
+  color: #555;
+}
+
+.nav-pills .nav-link.active {
+  color: white;
+}
+.width {
+  width: 18em;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+.bold {
+  font-weight: bold;
+}
+.flex {
+  display: flex;
+}
+.center {
+  margin: auto;
+}
+.fade {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fadeInMethod {
+  opacity: 0;
+  transition: opacity 2s ease-in;
+}
+@media (max-width: 500px) {
+  .fullWidth {
+    width: 100%;
+  }
+}

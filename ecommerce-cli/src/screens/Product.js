@@ -23,7 +23,7 @@ export default function Product({ match }) {
   var similarToProduct = [];
   for (var i = 0; i < 12; i++) {
     similarToProduct.push(
-      <Card style={{ width: "18rem" }} className="space">
+      <Card style={{ width: "18rem" }} className="space fullScreen">
         <Card.Body>
           <Card.Title>Card Title</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
@@ -110,9 +110,9 @@ export default function Product({ match }) {
 
   return (
     <>
-      <div className="row container-fluid">
+      <div className="row container-fluid padding-top-prevent-cut-off">
         <div className="row w-100">
-          <div className="col">{imageContainer}</div>
+          <div className="col ">{imageContainer}</div>
           <div className="col-lg-3 ">
             <div className="container center">
               <h2 className="text-center"> {product.item_name}</h2>

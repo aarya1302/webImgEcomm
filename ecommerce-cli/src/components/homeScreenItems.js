@@ -46,7 +46,9 @@ function HomeScreenItems(props) {
   }
 
   return (
-    <div className="displayProductCards container-fluid">{itemsCards}</div>
+    <div className="displayProductCards container-fluid fullScreen">
+      {itemsCards}
+    </div>
   );
 }
 export default HomeScreenItems;
