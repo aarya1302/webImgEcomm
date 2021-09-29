@@ -28,6 +28,9 @@ module.exports = (app, db) => {
   app.post("/login", async (req, res) => {
     var { email, password } = req.body;
     var usersCollection = db.getDB().collection("users");
+    try{
+
+    
     usersCollection.findOne({ email: email }, async (err, doc) => {
       if (doc) {
         var pwdCorrect = await bcrypt.compare(password, doc.password);
@@ -40,6 +43,7 @@ module.exports = (app, db) => {
             JSON.stringify(tokenData),
             process.env.JSON_TOKEN
           );
+          console.log(token)
           user.token = token;
           res.status(200).json(user);
         } else {
@@ -49,5 +53,8 @@ module.exports = (app, db) => {
         res.status(404).send("Email does not exist");
       }
     });
+  }catch{
+    res.status(404).send('And error has occured')
+  }
   });
 };

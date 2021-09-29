@@ -6,6 +6,7 @@ import "../style/product.css";
 import { fetchProduct } from "../lib/crud_functions";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductScreenAction } from "../actions/getProductScreenAction";
+import { addToCartAction } from "../actions/shoppingCartActions";
 export default function Product({ match }) {
   var id = match.params.id;
   var dispatch = useDispatch();
@@ -16,6 +17,9 @@ export default function Product({ match }) {
     },
     [dispatch]
   );
+  var addToCart = (cartItem) => { 
+    dispatch(addToCartAction(cartItem))
+  }
   var { loading, product } = getProduct;
   if (!product) {
     product = {};
@@ -123,7 +127,7 @@ export default function Product({ match }) {
                   <button className="btn btn-info w-100 btn-space">
                     Buy Now
                   </button>
-                  <button className="btn btn-primary w-100 btn-space">
+                  <button className="btn btn-primary w-100 btn-space" onClick={()=>{addToCart(id)}}>
                     Add to Cart
                   </button>
                 </Card.Body>
