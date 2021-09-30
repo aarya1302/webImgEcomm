@@ -14,10 +14,14 @@ var initialState = {
       ? JSON.parse(localStorage.getItem("user"))
       : null,
   },
-  cart: { 
-    loading: false, 
-    cart: localStorage.getItem('cart')?JSON.parse(localStorage.getItem('cart')):null  
-  }
+  cart: {
+    cartItems: localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart"))
+      : null,
+    cartLength: localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart")).length
+      : 0,
+  },
 };
 var reducer = combineReducers({
   getProducts: getProductsReducer,
@@ -25,7 +29,6 @@ var reducer = combineReducers({
   user: login,
   signUp: signUp,
   cart: shoppingCartReducer,
-
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 var store = new createStore(

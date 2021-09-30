@@ -21,9 +21,9 @@ function App() {
   var getUser = useSelector((state) => state.user);
   const [err, setErr] = useState();
   const [userInfo, setUser] = useState();
-  {
-    var { loading, user, error } = getUser ? getUser : {};
-  }
+
+  var { loading, user, error } = getUser ? getUser : {};
+
   useEffect(
     function onUpdate() {
       setErr(error);
@@ -42,7 +42,10 @@ function App() {
             exact
           />
           <Switch>
-            <Route path="/product/:id" component={Product} />
+            <Route
+              path="/product/:id"
+              component={() => <Product user={userInfo}></Product>}
+            />
           </Switch>
           <Route
             path="/signin"

@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const browsingRoutes = require("./routes/browsingRoutes");
 const authRoutes = require("./routes/authRoutes");
+const shoppingCartRoutes = require("./routes/shoppingCartRoutes");
 var app = express();
 require("dotenv").config({ path: ".env" });
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 authRoutes(app, db);
 browsingRoutes(app, db);
+shoppingCartRoutes(app, db);
 
 db.connect(() => {
   app.listen(process.env.PORT, () => {

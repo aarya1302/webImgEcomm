@@ -1,8 +1,8 @@
 const { default: axios } = require("axios");
 const {
-  GET_SHOPPING_CART_ITEMS_REQUEST,
-  GET_SHOPPING_CART_ITEMS_SUCCESS,
-  GET_SHOPPING_CART_ITEMS_FAIL,
+  GET_SHOPPING_productS_REQUEST,
+  GET_SHOPPING_productS_SUCCESS,
+  GET_SHOPPING_productS_FAIL,
 
   ADD_TO_SHOPPING_CART_REQUEST,
   ADD_TO_SHOPPING_CART_SUCCESS,
@@ -12,27 +12,31 @@ const { server_address } = require("../globalVariables");
 
 const getShoppingCartItems = async (dispatch) => {
   dispatch({
-    type: GET_SHOPPING_CART_ITEMS_REQUEST,
+    type: GET_SHOPPING_productS_REQUEST,
     payload: { loading: true },
   });
   try {
     let data = await axios.get(server_address + "/getShoppingCartItems");
-    dispatch({ type: GET_SHOPPING_CART_ITEMS_SUCCESS, payload: data });
+    dispatch({ type: GET_SHOPPING_productS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: GET_SHOPPING_CART_ITEMS_FAIL, payload: error.message });
+    dispatch({ type: GET_SHOPPING_productS_FAIL, payload: error.message });
   }
 };
 
-export const addToCartAction = (cart_item) => (dispatch) => {
+export const addToCartAction = (user_id, product) => async (dispatch) => {
   dispatch({ type: ADD_TO_SHOPPING_CART_REQUEST });
   try {
     var cart = localStorage.getItem("cart")
       ? JSON.parse(localStorage.getItem("cart"))
       : [];
-    if (cart.indexOf(cart_item) === -1) cart.push(cart_item);
-    else throw Error("item already in cart");
+    console.log(cart);
+    console.log(cart.indexOf(product));
+    if (cart.indexOf(product) !== -1) throw Error("item already in cart");
+    var res = await axios.get(
+      `${server_address}/add_to_cart/${user_id}/${product._id}`
+    );
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(res.data));
     dispatch({ type: ADD_TO_SHOPPING_CART_SUCCESS, payload: cart });
   } catch (error) {
     dispatch({ type: ADD_TO_SHOPPING_CART_FAIL, payload: error.message });

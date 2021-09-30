@@ -7,19 +7,39 @@ import { fetchProduct } from "../lib/crud_functions";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductScreenAction } from "../actions/getProductScreenAction";
 import { addToCartAction } from "../actions/shoppingCartActions";
-export default function Product({ match }) {
-  var id = match.params.id;
+export default function Product({ user }) {
+  var path = window.location.pathname.split("/");
+  var id = path[2];
+
+  //hooks
   var dispatch = useDispatch();
   var getProduct = useSelector((state) => state.getProductScreen);
+
+  var cartStatus = useSelector((state) => state.cart);
+  var { cartItems, cart_error, loading } = cartStatus;
+
+  var [err, setError] = useState(undefined);
+
   useEffect(
-    function onUpdate() {
+    function onUpdateDispatch() {
       dispatch(getProductScreenAction(id));
     },
     [dispatch]
   );
-  var addToCart = (cartItem) => { 
-    dispatch(addToCartAction(cartItem))
-  }
+
+  useEffect(
+    function onUpdateCart() {
+      if (cart_error) {
+        setError(cart_error);
+      }
+    },
+    [cartStatus]
+  );
+
+  //handlers
+  var addToCart = (cartItem) => {
+    dispatch(addToCartAction(user.id, product));
+  };
   var { loading, product } = getProduct;
   if (!product) {
     product = {};
@@ -115,6 +135,29 @@ export default function Product({ match }) {
   return (
     <>
       <div className="row container-fluid padding-top-prevent-cut-off">
+        {err && (
+          <div className=" row alert alert-danger w-100 ">
+            <p className="text-center col">{err}</p>
+            <button
+              className="btn"
+              onClick={() => {
+                setError(undefined);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                fill="currentColor"
+                class="bi bi-x"
+                viewBox="0 0 16 16"
+              >
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+          </div>
+        )}
+
         <div className="row w-100">
           <div className="col ">{imageContainer}</div>
           <div className="col-lg-3 ">
@@ -127,7 +170,12 @@ export default function Product({ match }) {
                   <button className="btn btn-info w-100 btn-space">
                     Buy Now
                   </button>
-                  <button className="btn btn-primary w-100 btn-space" onClick={()=>{addToCart(id)}}>
+                  <button
+                    className="btn btn-primary w-100 btn-space"
+                    onClick={() => {
+                      addToCart(id);
+                    }}
+                  >
                     Add to Cart
                   </button>
                 </Card.Body>
