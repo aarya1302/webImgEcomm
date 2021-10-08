@@ -5,7 +5,7 @@ import Header from "./header.js";
 function Layout(props) {
   const [userInfo, setUser] = useState();
   var getUser = useSelector((store) => store.user);
-
+  var cart = useSelector((store) => store.cart);
   var { user, loading, error } = getUser;
   useEffect(
     function onUpdate() {
