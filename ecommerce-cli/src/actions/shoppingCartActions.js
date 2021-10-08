@@ -29,15 +29,19 @@ export const addToCartAction = (user_id, product) => async (dispatch) => {
     var cart = localStorage.getItem("cart")
       ? JSON.parse(localStorage.getItem("cart"))
       : [];
-    console.log(cart);
-    console.log(cart.indexOf(product));
-    if (cart.indexOf(product) !== -1) throw Error("item already in cart");
+
+    cart.forEach((e) => {
+      if (e._id === product._id) throw Error("item already in cart");
+    });
     var res = await axios.get(
       `${server_address}/add_to_cart/${user_id}/${product._id}`
     );
 
     localStorage.setItem("cart", JSON.stringify(res.data));
-    dispatch({ type: ADD_TO_SHOPPING_CART_SUCCESS, payload: cart });
+    dispatch({
+      type: ADD_TO_SHOPPING_CART_SUCCESS,
+      payload: res.data,
+    });
   } catch (error) {
     dispatch({ type: ADD_TO_SHOPPING_CART_FAIL, payload: error.message });
   }
