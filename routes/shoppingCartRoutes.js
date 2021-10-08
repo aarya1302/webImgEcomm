@@ -42,4 +42,19 @@ module.exports = (app, db) => {
       }
     });
   });
+
+  app.post("/removeCartItem/:user_id/:item_id", (req, res) => {
+    var { user_id, item_id } = req.params;
+
+    const usersCollection = db.getDB().collection("users");
+    usersCollection.updateOne(
+      { _id: ObjectId(user_id) },
+      { $pull: { cart: { _id: ObjectId(item_id) } } },
+      () => {
+        usersCollection.findOne({ _id: ObjectId(user_id) }, (err, doc) => {
+          res.json(doc.cart);
+        });
+      }
+    );
+  });
 };

@@ -7,6 +7,9 @@ const {
   ADD_TO_SHOPPING_CART_REQUEST,
   ADD_TO_SHOPPING_CART_SUCCESS,
   ADD_TO_SHOPPING_CART_FAIL,
+  REMOVE_FROM_SHOPPING_CART_REQUEST,
+  REMOVE_FROM_SHOPPING_CART_FAIL,
+  REMOVE_FROM_SHOPPING_CART_SUCCESS,
 } = require("../constants/shoppingCartConstants");
 const { server_address } = require("../globalVariables");
 
@@ -44,5 +47,22 @@ export const addToCartAction = (user_id, product) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: ADD_TO_SHOPPING_CART_FAIL, payload: error.message });
+  }
+};
+
+export const removeFromCartAction = (user_id, cartItem) => async (dispatch) => {
+  dispatch({
+    type: REMOVE_FROM_SHOPPING_CART_REQUEST,
+    payload: { loading: true },
+  });
+  try {
+    var res = await axios.post(
+      `${server_address}/removeCartItem/${user_id}/${cartItem}`
+    );
+
+    localStorage.setItem("cart", JSON.stringify(res.data));
+    dispatch({ type: REMOVE_FROM_SHOPPING_CART_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({ type: REMOVE_FROM_SHOPPING_CART_FAIL, payload: error.message });
   }
 };
